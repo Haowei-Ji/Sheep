@@ -28,8 +28,8 @@ pygame.draw.ellipse(screen, BLACK, [150, 150, 125, 200], 3)
 
 
 #Ears
-pygame.draw.ellipse(screen, BLACK, [135, 250, 30, 100], 3)  # Left ear
-pygame.draw.ellipse(screen, BLACK, [260, 250, 30, 100], 3)  # Right ear
+pygame.draw.ellipse(screen, BLACK, [135, 250, 30, 100])  # Left ear
+pygame.draw.ellipse(screen, BLACK, [260, 250, 30, 100])  # Right ear
 
 #Face cleaning
 pygame.draw.ellipse(screen, WHITE, [152, 152, 120, 195])
@@ -45,7 +45,7 @@ pygame.draw.circle(screen, BLACK, [200, 225], 3)  # Left eye ball
 pygame.draw.circle(screen, BLACK, [225, 225], 3)  # Right eye ball
 
 # Tail
-pygame.draw.circle(screen, BLACK, [625, 325], 25, 3)
+pygame.draw.circle(screen, BLACK, [625, 325], 25)
 
 # Legs
 pygame.draw.rect(screen, BLACK, [275, 450, 15, 100], 3)  # Right front leg
