@@ -1,56 +1,83 @@
 import pygame
 import sys
 
-# 初始化Pygame
+from networkx import radius
+
 pygame.init()
 
-# 设置屏幕尺寸
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("用Radius参数画一只羊")
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("sheep")
 
-
-# 定义颜色
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-# 定义半径参数
-Radius = 50
 
-# 设置背景颜色
+
+# Background color
 screen.fill(WHITE)
 
+# Hesh grid Draw
+grid_size = 50
+for x in range(0, 800, grid_size):
+    pygame.draw.line(screen, BLACK, (x, 0), (x, 600), 1)
+for y in range(0, 600, grid_size):
+    pygame.draw.line(screen, BLACK, (0, y), (800, y), 1)
+
+Radius = 200
+
+# Body(ellipse)
+#pygame.draw.circle(screen, BLACK, [400, 300], 200, 3)
+body_width = 2 * Radius
+body_height = Radius
+body_x =screen_width//2 - Radius
+body_y =screen_height//2 - Radius//2
+pygame.draw.ellipse(screen, BLACK, [body_x , body_y, body_width , body_height],  3)
+
+# Head
+#pygame.draw.ellipse(screen, BLACK, [150, 150, 125, 200], 3)
+head_width = Radius // 2
+head_height = Radius
+head_x = body_x
+head_y =body_y -
+pygame.draw.ellipse(screen, BLACK, [screen_width//2 - Radius, screen_height//2 - Radius, head_width, head_height], 3)
 
 
-
-# 绘制羊的身体（椭圆，用半径来控制大小）
-body_width = 3 * Radius
-body_height = 2 * Radius
-pygame.draw.ellipse(screen, BLACK, [200 - body_width // 2, 200 - body_height // 2, body_width, body_height], 3)
-
-# 绘制羊的头部（圆）
-head_radius = Radius // 2
-pygame.draw.circle(screen, BLACK, (200 + body_width // 2 - head_radius, 200 - head_radius), head_radius, 3)
-
-# 绘制羊的眼睛（两个小圆）
-eye_radius = Radius // 8
-pygame.draw.circle(screen, BLACK, (200 + body_width // 2 - head_radius - eye_radius, 200 - head_radius // 2), eye_radius)
-pygame.draw.circle(screen, BLACK, (200 + body_width // 2 - head_radius + eye_radius, 200 - head_radius // 2), eye_radius)
-
-# 绘制羊的耳朵（两个小椭圆）
-ear_width = Radius // 3
+#Ears
+ear_width = Radius // 8
 ear_height = Radius // 2
-pygame.draw.ellipse(screen, BLACK, [200 + body_width // 2 - head_radius - ear_width, 200 - head_radius, ear_width, ear_height], 3)
-pygame.draw.ellipse(screen, BLACK, [200 + body_width // 2 - head_radius, 200 - head_radius, ear_width, ear_height], 3)
+pygame.draw.ellipse(screen, BLACK, [screen_width//2 - Radius, screen_height//2 - Radius + head_height//2, ear_width, ear_height])  # Left ear
+pygame.draw.ellipse(screen, BLACK, [screen_width//2 - Radius +head_width, screen_height//2 - Radius + head_height//2, ear_width, ear_height])  # Right ear
+#pygame.draw.ellipse(screen, BLACK, [135, 250, 30, 100])  # Left ear
+#pygame.draw.ellipse(screen, BLACK, [260, 250, 30, 100])  # Right ear
 
-# 绘制羊的腿（矩形）
-leg_width = Radius // 4
-leg_height = Radius // 2
-pygame.draw.rect(screen, BLACK, [200 - body_width // 4 - leg_width // 2, 200 + body_height // 2 - 5, leg_width, leg_height])
-pygame.draw.rect(screen, BLACK, [200 + body_width // 4 - leg_width // 2, 200 + body_height // 2 - 5, leg_width, leg_height])
+#Face cleaning
+#pygame.draw.ellipse(screen, WHITE, [152, 152, 120, 195])
+pygame.draw.ellipse(screen, WHITE, [screen_width//2 - Radius +2 , screen_height//2 - Radius +2, head_width -5, head_height-5])
 
-# 刷新屏幕以显示图像
+#Nose
+pygame.draw.circle(screen, BLACK, [190, 300], 5, 3)
+pygame.draw.circle(screen, BLACK, [225, 300], 5, 3)
+
+# Eyes
+pygame.draw.circle(screen, BLACK, [190, 220], 20, 3)  # Left eye
+pygame.draw.circle(screen, BLACK, [235, 220], 20, 3)  # Right eye
+pygame.draw.circle(screen, BLACK, [200, 225], 3)  # Left eye ball
+pygame.draw.circle(screen, BLACK, [225, 225], 3)  # Right eye ball
+
+# Tail
+pygame.draw.circle(screen, BLACK, [625, 325], 25)
+
+# Legs
+pygame.draw.rect(screen, BLACK, [275, 450, 15, 100], 3)  # Right front leg
+pygame.draw.rect(screen, BLACK, [325, 475, 15, 100], 3)  # Left front leg
+pygame.draw.rect(screen, BLACK, [550, 425, 15, 150], 3)  # Left back leg
+pygame.draw.rect(screen, BLACK, [525, 450, 15, 100], 3)  # Right back leg
+
+
 pygame.display.flip()
 
-# 退出事件处理
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
